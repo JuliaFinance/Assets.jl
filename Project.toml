@@ -1,0 +1,15 @@
+name = "Assets"
+uuid = "821ac057-2368-47e2-a1d8-2c0798f0e233"
+authors = ["Eric Forgy <Eric.Forgy@cavalre.com>", "ScottPJones <scottjones@alum.mit.edu>"]
+version = "0.1.0"
+
+[deps]
+FixedPointDecimals = "fb4d412d-6eee-574d-9565-ede6634db7b0"
+Instruments = "2a4f3d17-849a-48a1-809e-d780c70a95a0"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
