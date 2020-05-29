@@ -4,6 +4,7 @@ using Instruments, FixedPointDecimals
 import Instruments: Position, currency, symbol, unit, code, name
 
 export Currencies, Currency, Position, Cash, FixedDecimal
+export Nasdaq
 
 """
 `Cash` is a financial instrument represented by a singleton type with its currency symbol and the number of digits in the minor units, typically 0, 2, or 3, as parameters.
@@ -27,5 +28,7 @@ end
 for (s,(ccy,u,c,n)) in Currencies.allpairs()
     @eval const $s = Cash($ccy)
 end
+
+include(joinpath(@__DIR__,"ListedEquities","ListedEquities.jl")); using .ListedEquities
 
 end # module
