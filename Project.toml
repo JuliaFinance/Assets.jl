@@ -5,7 +5,9 @@ version = "0.1.0"
 
 [deps]
 FixedPointDecimals = "fb4d412d-6eee-574d-9565-ede6634db7b0"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 Instruments = "2a4f3d17-849a-48a1-809e-d780c70a95a0"
+JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
 
 [extras]
 DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"

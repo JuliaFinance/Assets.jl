@@ -1,7 +1,9 @@
 module Assets
 
 using Instruments, FixedPointDecimals
-import Instruments: Position, currency, symbol, unit, code, name
+using Instruments: currency, symbol
+import Instruments: Position, unit, code, name
+import HTTP, JSON3
 
 export Currencies, Currency, Position, Cash, FixedDecimal
 export Nasdaq

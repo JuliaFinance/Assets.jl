@@ -6,10 +6,7 @@ import Instruments: Position
 export ListedEquity, Nasdaq
 
 struct ListedEquity{E,S} <: AbstractInstrument{S,Currency{:USD}} end
-
-# function Position(eq::ListedEquity{E,S}, a::A) where {E,S,A}
-#     Position{ListedEquity{E,S},A}(eq,a)
-# end
+ListedEquity(exch::Symbol, sym::Symbol) = ListedEquity{exch,sym}()
 
 include("Nasdaq.jl"); using .Nasdaq
 
