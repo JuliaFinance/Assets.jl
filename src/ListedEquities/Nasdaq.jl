@@ -3,7 +3,7 @@ module Nasdaq
 import ..ListedEquities: ListedEquity
 import ...HTTP, ...JSON3
 
-function download(;port=8000,force=false)
+function build(;port=8000,force=false)
     jsonfile = joinpath(@__DIR__,"nasdaq.json")
     if isfile(jsonfile) && force
         response = JSON3.read(read(jsonfile, String))
