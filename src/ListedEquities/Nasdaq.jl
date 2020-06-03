@@ -5,7 +5,7 @@ import ...HTTP, ...JSON3
 
 function build(;port=8000,force=false)
     jsonfile = joinpath(@__DIR__,"nasdaq.json")
-    if isfile(jsonfile) && force
+    if isfile(jsonfile) && !force
         response = JSON3.read(read(jsonfile, String))
     else
         response = JSON3.read(HTTP.get("http://localhost:$(port)/api/nasdaq/list").body)
@@ -15,7 +15,7 @@ function build(;port=8000,force=false)
         s = stock["Symbol"]
         d = stock["Description"]
         @eval Nasdaq begin
-            $(Symbol(s)) = ListedEquity{:NASDAQ,Symbol($s)}()
+            const $(Symbol(s)) = ListedEquity{:Nasdaq,Symbol($s),:USD}()
             _nasdaq_data[Symbol($s)] = ($(Symbol(s)),$d)
         end
     end

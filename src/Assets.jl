@@ -19,7 +19,7 @@ unit(::Cash{C,N}) where {C,N} = N
 code(c::Cash) = code(currency(c))
 name(c::Cash) = name(currency(c))
 
-Base.show(io::IO, ::Cash{<:Currency{T}}) where {T} = print(io, string(T))
+Base.show(io::IO, ::Cash{C}) where {C} = print(io, string(C))
 
 function Position(cash::Cash{C,N}, a) where {C,N}
     T = FixedDecimal{Int,N}
