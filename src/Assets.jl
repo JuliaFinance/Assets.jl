@@ -1,9 +1,12 @@
 module Assets
 
 using Instruments, FixedPointDecimals
-import Instruments: Position, currency, symbol, unit, code, name
+using Instruments: currency, symbol
+import Instruments: Position, unit, code, name
+import HTTP, JSON3
 
 export Currencies, Currency, Position, Cash, FixedDecimal
+export Nasdaq
 
 """
 `Cash` is a financial instrument represented by a singleton type with its currency symbol and the number of digits in the minor units, typically 0, 2, or 3, as parameters.
@@ -16,7 +19,7 @@ unit(::Cash{C,N}) where {C,N} = N
 code(c::Cash) = code(currency(c))
 name(c::Cash) = name(currency(c))
 
-Base.show(io::IO, ::Cash{<:Currency{T}}) where {T} = print(io, string(T))
+Base.show(io::IO, ::Cash{C}) where {C} = print(io, string(C))
 
 function Position(cash::Cash{C,N}, a) where {C,N}
     T = FixedDecimal{Int,N}
@@ -27,5 +30,7 @@ end
 for (s,(ccy,u,c,n)) in Currencies.allpairs()
     @eval const $s = Cash($ccy)
 end
+
+include(joinpath(@__DIR__,"ListedEquities","ListedEquities.jl")); using .ListedEquities
 
 end # module
