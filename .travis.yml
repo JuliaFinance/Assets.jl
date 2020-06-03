@@ -21,7 +21,8 @@ matrix:
 ## uncomment the following lines to override the default test script
 
 before_script: # homebrew for mac
-  - julia -e 'using Pkg; Pkg.add(PackageSpec(;url="https://github.com/JuliaFinance/Instruments.jl.git"))'
+  - julia -e 'p=joinpath(DEPOT_PATH[1],"registries");mkpath(p);using LibGit2;LibGit2.clone("https://github.com/JuliaRegistries/General.git",joinpath(p,"General"))'
+  - julia -e 'p=joinpath(DEPOT_PATH[1],"registries");using LibGit2;LibGit2.clone("https://github.com/JuliaFinance/JuliaFinance.git",joinpath(p,"JuliaFinance"))'
 after_success:
   # push coverage results to Codecov
   - julia -e 'using Pkg; cd(Pkg.dir("Assets")); using Coverage; Codecov.submit(Codecov.process_folder())'
