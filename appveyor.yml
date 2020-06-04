@@ -30,11 +30,12 @@ install:
 
 build_script:
   - echo "%JL_BUILD_SCRIPT%"
+  - C:\julia\bin\julia -e "p=joinpath(DEPOT_PATH[1],\"registries\");mkpath(p);using LibGit2;LibGit2.clone(\"https://github.com/JuliaRegistries/General.git\",joinpath(p,\"General\"))"
+  - C:\julia\bin\julia -e "p=joinpath(DEPOT_PATH[1],\"registries\");using LibGit2;LibGit2.clone(\"https://github.com/JuliaFinance/JuliaFinance.git\",joinpath(p,\"JuliaFinance\"))"
   - C:\julia\bin\julia -e "%JL_BUILD_SCRIPT%"
 
 test_script:
   - echo "%JL_TEST_SCRIPT%"
-  - C:\julia\bin\julia -e "using Pkg; Pkg.add(PackageSpec(url=\"https://github.com/JuliaFinance/Instruments.jl.git\"))"
   - C:\julia\bin\julia -e "%JL_TEST_SCRIPT%"
 
 # # Uncomment to support code coverage upload. Should only be enabled for packages
