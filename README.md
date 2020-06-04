@@ -2,8 +2,8 @@
 
 [pkg-url]: https://github.com/JuliaFinance/Assets.jl.git
 
-[eval-url]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/report.html
-[eval-img]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/A/Assets.svg
+[julia-url]:    https://github.com/JuliaLang/Julia
+[julia-release]:https://img.shields.io/github/release/JuliaLang/julia.svg
 
 [release]:      https://img.shields.io/github/release/JuliaFinance/Assets.jl.svg
 [release-date]: https://img.shields.io/github/release-date/JuliaFinance/Assets.jl.svg
@@ -24,10 +24,9 @@
 [codecov-url]:  https://codecov.io/gh/JuliaFinance/Assets.jl
 [codecov-img]:  https://codecov.io/gh/JuliaFinance/Assets.jl/branch/master/graph/badge.svg
 
-[![contributions welcome][contrib]](https://github.com/JuliaFinance/Assets.jl/issues)
-[![][license-img]][license-url]
+[![][release]][pkg-url] [![][release-date]][pkg-url] [![][license-img]][license-url] [![contributions welcome][contrib]](https://github.com/JuliaFinance/Assets.jl/issues)
 
-| **Info** | **Windows** | **Linux & MacOS** | **Package Evaluator** | **Coverage** |
-|:------------------:|:------------------:|:---------------------:|:-----------------:|:---------------------:|
-| [![][release]][pkg-url] [![][release-date]][pkg-url] | [![][app-s-img]][app-s-url] | [![][travis-s-img]][travis-url] | [![][pkg-img]][pkg-url] | [![][codecov-img]][codecov-url]
-| master branch | [![][app-m-img]][app-m-url] | [![][travis-m-img]][travis-url] | [![][pkg-img]][pkg-url] | [![][codecov-img]][codecov-url]
+| **Info** | **Windows** | **Linux & MacOS** | **Coverage** |
+|:------------------:|:------------------:|:---------------------:|:---------------------:|
+| [![][julia-release]][julia-url] | [![][app-s-img]][app-s-url] | [![][travis-s-img]][travis-url] | [![][codecov-img]][codecov-url]
+| master branch | [![][app-m-img]][app-m-url] | [![][travis-m-img]][travis-url] | [![][codecov-img]][codecov-url]
