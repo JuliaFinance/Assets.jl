@@ -4,10 +4,11 @@ authors = ["Eric Forgy <Eric.Forgy@cavalre.com>", "ScottPJones <scottjones@alum.
 keywords = ["Finance", "Asset"]
 license = "MIT"
 uuid = "821ac057-2368-47e2-a1d8-2c0798f0e233"
-version = "0.2.0"
+version = "0.3.0"
 
 [deps]
 FixedPointDecimals = "fb4d412d-6eee-574d-9565-ede6634db7b0"
+Currencies = "0fd90b74-7c1f-579e-9252-02cd883047b9"
 Instruments = "2a4f3d17-849a-48a1-809e-d780c70a95a0"
 
 [extras]

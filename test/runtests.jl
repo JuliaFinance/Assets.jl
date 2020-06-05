@@ -1,4 +1,4 @@
-using Assets
+using Currencies, Instruments, Assets, FixedPointDecimals
 import Assets: USD, EUR, JPY, JOD, CNY
 import Assets: currency, symbol, unit, code, name
 

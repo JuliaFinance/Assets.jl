@@ -1,13 +1,10 @@
 module Assets
 
-using Instruments
+using Currencies, Instruments, FixedPointDecimals
 using Instruments: currency, symbol
 import Instruments: unit, code, name
 
-using FixedPointDecimals
-
 export Cash, ListedEquity
-export Currencies, Currency, Position, FixedDecimal
 
 """
 `Cash` is a financial instrument represented by a singleton type with its currency symbol and the number of digits in the minor units, typically 0, 2, or 3, as parameters.
