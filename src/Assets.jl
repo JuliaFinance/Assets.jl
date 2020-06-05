@@ -9,7 +9,7 @@ export Cash, ListedEquity
 """
 `Cash` is a financial instrument represented by a singleton type with its currency symbol and the number of digits in the minor units, typically 0, 2, or 3, as parameters.
 """
-struct Cash{S, N} <: AbstractInstrument{S,Currency{S}}
+struct Cash{S, N} <: Instrument{S,Currency{S}}
     Cash(S::Symbol) = new{S,unit(S)}()
 end
 Cash(::Currency{S}) where {S} = Cash(S)
@@ -28,7 +28,7 @@ end
 """
 `ListedEquity` is a financial instrument represented by a singleton type with the exchange it is listed on, and its symbol (such as :MSFT)
 """
-struct ListedEquity{E,S,C} <: AbstractInstrument{S,Currency{C}}
+struct ListedEquity{E,S,C} <: Instrument{S,Currency{C}}
     ListedEquity(E::Symbol, S::Symbol, C::Symbol) = new{E,S,C}()
 end
 
