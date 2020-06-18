@@ -2,16 +2,15 @@ module Assets
 
 using Currencies, Instruments, FixedPointDecimals
 using Instruments: currency, symbol
-import Instruments: unit, code, name
+import Instruments: Position, unit, code, name
 
 export Cash, ListedEquity
 
 """
 `Cash` is a financial instrument represented by a singleton type with its currency symbol and the number of digits in the minor units, typically 0, 2, or 3, as parameters.
 """
-struct Cash{S, N} <: Instrument{S,Currency{S}}
-    Cash(S::Symbol) = new{S,unit(S)}()
-end
+struct Cash{S, N} <: Instrument{S,Currency{S}} end
+Cash(S::Symbol) = Cash{S,unit(S)}()
 Cash(::Currency{S}) where {S} = Cash(S)
 
 unit(::Cash{C,N}) where {C,N} = N
@@ -20,9 +19,9 @@ name(c::Cash) = name(currency(c))
 
 Base.show(io::IO, ::Cash{C}) where {C} = print(io, string(C))
 
-function Instruments.Position(cash::Cash{C,N}, a) where {C,N}
+function Position{Cash{C,N}}(a) where {C,N}
     T = FixedDecimal{Int,N}
-    Position{Cash{C,N},T}(cash,T(a))
+    Position{Cash{C,N},T}(T(a))
 end
 
 """
