@@ -1,6 +1,6 @@
 using Currencies, Instruments, Assets, FixedPointDecimals
-import Assets: USD, EUR, JPY, JOD, CNY
-import Assets: currency, symbol, unit, code, name
+using Assets: USD, EUR, JPY, JOD, CNY
+using Assets: currency, symbol, unit, code, name
 
 using Test
 
@@ -32,15 +32,16 @@ end
         @test unit(cash) == unit(ccy)
         @test code(cash) == code(ccy)
         @test name(cash) == name(ccy)
-    
-        position = Position(cash, 1)
+
+        CT = typeof(cash)
+        position = Position{CT}(1)
         @test currency(position) == currency(cash)
         @test currency(1cash) == ccy
         @test 1cash == position
         @test cash * 1 == position
-        @test 1cash + 1cash == Position(cash, 2)
-        @test 1cash - 1cash == Position(cash, 0)
+        @test 1cash + 1cash == Position{CT}(2)
+        @test 1cash - 1cash == Position{CT}(0)
         @test 20cash / 4cash == FixedDecimal{Int,unit(cash)}(5)
-        @test 20cash / 4 == Position(cash, 5)
+        @test 20cash / 4 == Position{CT}(5)
     end
 end
