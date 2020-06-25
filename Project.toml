@@ -4,7 +4,7 @@ keywords = ["Finance", "Asset"]
 license = "MIT"
 desc = "Financial assets"
 authors = ["Eric Forgy <Eric.Forgy@cavalre.com>", "ScottPJones <scottjones@alum.mit.edu>"]
-version = "0.5.0"
+version = "0.6.0"
 
 [deps]
 Currencies = "0fd90b74-7c1f-579e-9252-02cd883047b9"

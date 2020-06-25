@@ -1,6 +1,6 @@
-using Currencies, Instruments, Assets, FixedPointDecimals
-using Assets: USD, EUR, JPY, JOD, CNY
-using Assets: currency, symbol, unit, code, name
+using Assets; using Assets: USD, EUR, JPY, JOD, CNY
+using Currencies; using Currencies: currency, symbol, unit, code, name
+using Instruments, FixedPointDecimals
 
 using Test
 
