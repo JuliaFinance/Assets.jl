@@ -4,7 +4,8 @@ Assets
 This package provides implementations of `Instrument` for various financial assets:
 
 - `Cash`: which is based on a particular currency type, along with the minor unit.
-- `ListedStock`: which represents common stock listed on an exchange.
+- `Stock`: which represents a general common stock.
+- `ListedStock`: which represents a common stock listed on an exchange.
 
 It also provides a specialized `Position` for `Cash` that uses the currencies minor unit.
 
@@ -38,9 +39,20 @@ function Position{Cash{C,N}}(a) where {C,N}
 end
 
 """
-`ListedStock` is an implementation of `Instrument` represented by a singleton type with the exchange it is listed and its symbol, e.g. `ListedStock{:NASDAQ,:MSFT,:USD}`
+`Stock` is an implementation of a simple `Instrument` represented by a singleton type with a stock symbol and currency, e.g. `Stock{:MSFT,:USD}`. The currency can be omitted and it will default to USD, e.g. `Stock(:MSFT)`.
 """
-struct ListedStock{E,S,C} <: Instrument{S,Currency{C}} end
+struct Stock{S,C} <: Instrument{S,Currency{C}}
+    Stock(S::Symbol) = new{S,:USD}()
+    Stock(S::Symbol,C::Symbol) = new{S,C}()
+end
+
+"""
+`ListedStock` is an implementation of `Instrument` represented by a singleton type with the exchange it's listed, its symbol and its currency, e.g. `ListedStock{:NASDAQ,:MSFT,:USD}`. The currency can be omitted and it will default to USD, e.g. `ListedStock(:NASDAQ,:MSFT)`.
+"""
+struct ListedStock{E,S,C} <: Instrument{S,Currency{C}}
+    ListedStock(E::Symbol, S::Symbol) = new{E,S,:USD}()
+    ListedStock(E::Symbol, S::Symbol, C::Symbol) = new{E,S,C}()
+end
 
 # Set up short names for all of the currencies (as instances of the Cash instruments). This is really done as a convenience
 for (s,(ccy,u,c,n)) in Currencies.allpairs()
