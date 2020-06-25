@@ -4,7 +4,7 @@ Assets
 This package provides implementations of `Instrument` for various financial assets:
 
 - `Cash`: which is based on a particular currency type, along with the minor unit.
-- `ListedStock`: which represents common stock listed on an `Exchange`.
+- `ListedStock`: which represents common stock listed on an exchange.
 
 It also provides a specialized `Position` for `Cash` that uses the currencies minor unit.
 
