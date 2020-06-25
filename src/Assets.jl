@@ -7,7 +7,7 @@ This package provides implementations of `Instrument` for various financial asse
 - `Stock`: which represents a general common stock.
 - `ListedStock`: which represents a common stock listed on an exchange.
 
-It also provides a specialized `Position` for `Cash` that uses the currencies minor unit.
+It also provides a specialized `Position` for `Cash` that uses the currency's minor unit.
 
 See README.md for the full documentation
 
