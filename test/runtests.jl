@@ -1,6 +1,6 @@
-using Currencies, Instruments, Assets, FixedPointDecimals
-using Assets: USD, EUR, JPY, JOD, CNY
-using Assets: currency, symbol, unit, code, name
+using Assets; using Assets: USD, EUR, JPY, JOD, CNY
+using Currencies; using Currencies: currency, symbol, unit, code, name
+using Instruments, FixedPointDecimals
 
 using Test
 
@@ -27,7 +27,7 @@ end
         cash = Base.eval(Assets, sym)
         @test cash == Cash(ccy)
         @test cash == Cash(symbol(ccy))
-        @test currency(cash) == ccy
+        @test currency(cash) == typeof(ccy)
         @test symbol(cash) == symbol(ccy)
         @test unit(cash) == unit(ccy)
         @test code(cash) == code(ccy)
@@ -36,7 +36,7 @@ end
         CT = typeof(cash)
         position = Position{CT}(1)
         @test currency(position) == currency(cash)
-        @test currency(1cash) == ccy
+        @test currency(1cash) == typeof(ccy)
         @test 1cash == position
         @test cash * 1 == position
         @test 1cash + 1cash == Position{CT}(2)
