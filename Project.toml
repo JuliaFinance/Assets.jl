@@ -4,12 +4,16 @@ keywords = ["Finance", "Asset"]
 license = "MIT"
 desc = "Financial assets"
 authors = ["Eric Forgy <Eric.Forgy@cavalre.com>", "ScottPJones <scottjones@alum.mit.edu>"]
-version = "0.6.0"
+version = "0.7.0"
 
 [deps]
 Currencies = "0fd90b74-7c1f-579e-9252-02cd883047b9"
 FixedPointDecimals = "fb4d412d-6eee-574d-9565-ede6634db7b0"
 Instruments = "2a4f3d17-849a-48a1-809e-d780c70a95a0"
+
+[compat]
+Currencies = "0.17"
+Instruments = "0.6"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
