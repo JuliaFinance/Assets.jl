@@ -27,6 +27,7 @@ export Cash, ListedStock
 """
 struct Cash{S, N} <: Instrument{S,Currency{S}} end
 Cash(S::Symbol) = Cash{S,unit(S)}()
+Cash(::Type{Currency{S}}) where {S} = Cash(S)
 Cash(::Currency{S}) where {S} = Cash(S)
 
 unit(::Cash{S,N}) where {S,N} = N
