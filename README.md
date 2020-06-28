@@ -70,7 +70,7 @@ julia> USD(1000)
 1000.00USD
 ```
 
-and
+or
 
 ```julia
 julia> 1000USD
