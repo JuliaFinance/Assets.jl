@@ -90,7 +90,7 @@ Simple algebraic operations can be performed on positions of an `Instrument`:
 julia> 10USD+20USD
 30.00USD
 
-julia> 1000MSFT+20MSFT
+julia> 1000MSFT+1000MSFT
 2000MSFT
 
 julia> 5*20USD
