@@ -12,8 +12,8 @@ FixedPointDecimals = "fb4d412d-6eee-574d-9565-ede6634db7b0"
 Instruments = "2a4f3d17-849a-48a1-809e-d780c70a95a0"
 
 [compat]
-Currencies = "0.17"
-Instruments = "0.6"
+Currencies = ">= 0.17"
+Instruments = ">= 0.7"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
