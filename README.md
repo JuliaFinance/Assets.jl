@@ -4,7 +4,7 @@
 
 [travis-url]:   https://travis-ci.org/JuliaFinance/Assets.jl
 [travis-s-img]: https://travis-ci.org/JuliaFinance/Assets.jl.svg
-[travis-m-img]: https://travis-ci.org/JuliaFinance/Assets.jl.svg?branch=master
+[travis-m-img]: https://travis-ci.org/JuliaFinance/Assets.jl.svg?branch=main
 
 [![][travis-s-img]][travis-url]  [![][travis-m-img]][travis-url] 
 
