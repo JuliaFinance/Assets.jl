@@ -1,7 +1,3 @@
-# Assets
-
-# Assets
-
 [pkg-url]: https://github.com/JuliaFinance/Assets.jl.git
 
 [julia-url]:    https://github.com/JuliaLang/Julia
@@ -21,12 +17,12 @@
 [codecov-url]:  https://codecov.io/gh/JuliaFinance/Assets.jl
 [codecov-img]:  https://codecov.io/gh/JuliaFinance/Assets.jl/branch/master/graph/badge.svg
 
-[![][release]][pkg-url] [![][release-date]][pkg-url] [![][license-img]][license-url] [![contributions welcome][contrib]](https://github.com/JuliaFinance/Assets.jl/issues)
-
 | **Julia Version** | **Unit Tests** | **Coverage** |
-|:------------------:|:------------------:|:---------------------:|:---------------------:|
+|:------------------:|:---------------------:|:---------------------:|
 | [![][julia-release]][julia-url] | [![][travis-s-img]][travis-url] | [![][codecov-img]][codecov-url]
 | Julia Latest | [![][travis-m-img]][travis-url] | [![][codecov-img]][codecov-url]
+
+# Assets
 
 This package provides concrete implementations of `Instrument` for various financial assets:
 
