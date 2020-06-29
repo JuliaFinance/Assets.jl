@@ -1,6 +1,7 @@
-using Assets; using Assets: USD, EUR, JPY, JOD, CNY
-using Currencies; using Currencies: currency, symbol, unit, code, name
-using Instruments, FixedPointDecimals
+using Assets, Currencies, Instruments, FixedPointDecimals
+
+using Assets: USD, EUR, JPY, JOD, CNY
+using Currencies: currency, symbol, unit, code, name
 
 using Test
 
@@ -24,24 +25,23 @@ end
 @testset "All currencies" begin
     for sym in Currencies.allsymbols()
         ccy = Currency{sym}()
-        cash = Base.eval(Assets, sym)
-        @test cash == Cash(ccy)
-        @test cash == Cash(symbol(ccy))
-        @test currency(cash) == typeof(ccy)
-        @test symbol(cash) == symbol(ccy)
-        @test unit(cash) == unit(ccy)
-        @test code(cash) == code(ccy)
-        @test name(cash) == name(ccy)
+        ct = Base.eval(Assets, sym)
+        @test ct == cash(ccy)
+        @test ct == cash(sym)
+        @test currency(ct) == typeof(ccy)
+        @test symbol(ct) == symbol(ccy)
+        @test unit(ct) == unit(ccy)
+        @test code(ct) == code(ccy)
+        @test name(ct) == name(ccy)
 
-        CT = typeof(cash)
-        position = Position{CT}(1)
-        @test currency(position) == currency(cash)
-        @test currency(1cash) == typeof(ccy)
-        @test 1cash == position
-        @test cash * 1 == position
-        @test 1cash + 1cash == Position{CT}(2)
-        @test 1cash - 1cash == Position{CT}(0)
-        @test 20cash / 4cash == FixedDecimal{Int,unit(cash)}(5)
-        @test 20cash / 4 == Position{CT}(5)
+        position = Position{ct}(1)
+        @test currency(position) == currency(ct)
+        @test currency(1ct) == typeof(ccy)
+        @test 1ct == position
+        @test ct * 1 == position
+        @test 1ct + 1ct == Position{ct}(2)
+        @test 1ct - 1ct == Position{ct}(0)
+        @test 20ct / 4ct == FixedDecimal{Int,unit(ct)}(5)
+        @test 20ct / 4 == Position{ct}(5)
     end
 end
