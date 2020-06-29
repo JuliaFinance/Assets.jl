@@ -26,7 +26,7 @@ end
     for sym in Currencies.allsymbols()
         ccy = Currency{sym}()
         ct = Base.eval(Assets, sym)
-        @test ct == cash(ccy)
+        @test ct == cash(typeof(ccy))
         @test ct == cash(sym)
         @test currency(ct) == typeof(ccy)
         @test symbol(ct) == symbol(ccy)
