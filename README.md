@@ -8,9 +8,9 @@
 
 [license-img]:  http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
 [license-url]:  LICENSE.md
-[travis-url]:   https://travis-ci.org/JuliaFinance/Assets.jl
-[travis-s-img]: https://travis-ci.org/JuliaFinance/Assets.jl.svg
-[travis-m-img]: https://travis-ci.org/JuliaFinance/Assets.jl.svg?branch=main
+[travis-url]:   https://travis-ci.com/JuliaFinance/Assets.jl
+[travis-s-img]: https://travis-ci.com/JuliaFinance/Assets.jl.svg
+[travis-m-img]: https://travis-ci.com/JuliaFinance/Assets.jl.svg?branch=main
 
 [contrib]:    https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat
 
