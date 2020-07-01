@@ -1,26 +1,10 @@
-[pkg-url]: https://github.com/JuliaFinance/Assets.jl.git
-
-[julia-url]:    https://github.com/JuliaLang/Julia
-[julia-release]:https://img.shields.io/github/release/JuliaLang/julia.svg
-
-[release]:      https://img.shields.io/github/release/JuliaFinance/Assets.jl.svg
-[release-date]: https://img.shields.io/github/release-date/JuliaFinance/Assets.jl.svg
-
-[license-img]:  http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
-[license-url]:  LICENSE.md
 [travis-url]:   https://travis-ci.com/JuliaFinance/Assets.jl
-[travis-s-img]: https://travis-ci.com/JuliaFinance/Assets.jl.svg
-[travis-m-img]: https://travis-ci.com/JuliaFinance/Assets.jl.svg?branch=main
-
-[contrib]:    https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat
+[travis-img]: https://travis-ci.com/JuliaFinance/Assets.jl.svg
 
 [codecov-url]:  https://codecov.io/gh/JuliaFinance/Assets.jl
 [codecov-img]:  https://codecov.io/gh/JuliaFinance/Assets.jl/branch/master/graph/badge.svg
 
-| **Julia Version** | **Unit Tests** | **Coverage** |
-|:------------------:|:---------------------:|:---------------------:|
-| [![][julia-release]][julia-url] | [![][travis-s-img]][travis-url] | [![][codecov-img]][codecov-url]
-| Julia Latest | [![][travis-m-img]][travis-url] | [![][codecov-img]][codecov-url]
+[![][travis-img]][travis-url] [![][codecov-img]][codecov-url]
 
 # Assets
 
@@ -35,12 +19,14 @@ It also provides a specialized `Position` for `Cash` that uses the currency's mi
 
 When a currency is thought of as a financial instrument (as opposed to a mere label), we choose to refer to it as "Cash" as it would appear in a balance sheet. This package implements the `Cash` instrument with parameter `S` being the 3-character ISO 4217 alpha label of the currency as a `Symbol` and an integer `N` representing the number of decimal places in the currency (typically 0, 2 or 3).
 
-Short constants are set up, matching the ISO 4217 names, so that you can use `USD` instead of `Cash{:USD,2}`.
+The @cash macro will set up short constants, matching the ISO 4217 names, so that you can use `USD` instead of `Cash{:USD,2}`.
+
+One can also use the `cash` string macro, i.e. `cash"GBP"`, to refer to a particular Cash type.
 
 For example:
 
 ```julia
-julia> using Assets: JPY, USD, JOD
+julia> @cash JPY, USD, JOD
 
 julia> JPY
 Cash{:JPY,0}
@@ -63,7 +49,7 @@ Although `Cash` is a singleton type, other financial instruments may contain var
 A `Position` represents an amount of ownership of a financial instrument. For example, Microsoft stock
 
 ```julia
-const MSFT = stock(:MSFT,:USD)
+const MSFT = stock(:MSFT,USD)
 ```
 is a financial instrument. A position could be 1,000 shares of `MSFT` and can be represented in one of two ways:
 
@@ -78,6 +64,11 @@ or
 julia> 1000MSFT
 1000MSFT
 ```
+
+The `stock` string macro can also be used, for example:
+`stock"MSFT"`
+or
+`stock"GSK"gbp` (to indicate a stock, GlaxoSmithKline, denominated in British Pounds).
 
 Similarly, cash positions can be constructed as
 
