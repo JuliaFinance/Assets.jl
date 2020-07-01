@@ -2,7 +2,7 @@
 [travis-img]: https://travis-ci.com/JuliaFinance/Assets.jl.svg
 
 [codecov-url]:  https://codecov.io/gh/JuliaFinance/Assets.jl
-[codecov-img]:  https://codecov.io/gh/JuliaFinance/Assets.jl/branch/master/graph/badge.svg
+[codecov-img]:  https://codecov.io/gh/JuliaFinance/Assets.jl/branch/main/graph/badge.svg
 
 [![][travis-img]][travis-url] [![][codecov-img]][codecov-url]
 
