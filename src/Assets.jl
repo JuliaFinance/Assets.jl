@@ -19,7 +19,8 @@ module Assets
 using Currencies, FixedPointDecimals, Instruments
 import Currencies: symbol, currency, unit, code, name
 
-export Cash, Stock, cash, stock, @cash_str, @stock_str
+export Cash, cash, @cash_str, @cash
+export Stock, stock, @stock_str, @stock
 
 """
 `Cash` is an implementation of `Instrument` represented by a singleton type,
@@ -45,39 +46,54 @@ name(::Type{<:Cash{S}}) where {S} = name(S)
 currency(::Type{<:Cash{S}}) where {S} = currency(S)
 
 macro cash_str(str)
-    :( cash(Symbol($(esc(str)))) )
+    :( cash(Symbol($(esc(uppercase(str))))) )
 end
 
-function Position{Cash{C,N}}(a) where {C,N}
+macro cash(syms)
+    args = syms isa Expr ? syms.args : [syms]
+    for nam in args
+        lownam = Symbol(lowercase(string(nam)))
+        Base.eval(__module__, :( const $nam = cash($(QuoteNode(nam))) ) )
+        Base.eval(__module__, :( const $lownam = $nam() ) )
+    end
+end
+
+function Position{S}(amt) where {C,N,S<:Cash{C,N}}
     T = FixedDecimal{Int,N}
-    Position{Cash{C,N},T}(T(a))
+    Position{S,T}(T(amt))
 end
 
 """
 `Stock` is an implementation of a simple `Instrument` represented by a singleton type
-with a stock symbol and currency, e.g. `Stock{:MSFT,:USD}`.
+with a stock symbol and currency, e.g. `Stock{:MSFT,ccy"USD"}`.
 The currency can be omitted and it will default to USD, e.g. `Stock(:MSFT)`.
 """
-struct Stock{S,C} <: Instrument{S,C}
-    Stock(sym::Symbol, ccy::Symbol=:USD) = new{sym,currency(ccy)}()
-    Stock(sym::Symbol, ::Type{T}) where {T<:Currency} = new{sym,T}()
+struct Stock{S,C} <: Instrument{S,Currency}
+    Stock(sym::Symbol, ccy::Type{<:Currency}=Currency(:USD)) = new{sym,currency(ccy)}()
+    Stock(sym::Symbol, pos::Type{<:Cash}) = new{sym,currency(pos)}()
+end
+stock(sym::Symbol, ccy::Type{<:Currency}=Currency(:USD)) = typeof(Stock(sym, currency(ccy)))
+stock(sym::Symbol, pos::Type{<:Cash}) = typeof(Stock(sym, currency(pos)))
+
+symbol(::Type{Stock{S,C}}) where {S,C} = S
+currency(::Type{Stock{S,C}}) where {S,C} = C
+
+macro stock_str(str, ccy="USD")
+    :( stock(Symbol($(esc(str))), $(esc(currency(Symbol(uppercase(ccy))))) ) )
 end
 
-"""
-Return the singleton type for a particular general stock, given it's symbol.
-Defaults to USD for the currency
-"""
-stock(sym::Symbol, ccy::Symbol=:USD) = Stock{sym,currency(ccy)}
-stock(sym::Symbol, ::Type{T}) where {T<:Currency} = Stock{sym,T}
-
-macro stock_str(str,ccy="USD")
-    :( stock(Symbol($(esc(str))),Symbol($(esc(ccy)))) )
+macro stock(syms)
+    args = syms isa Expr ? syms.args : [syms]
+    for nam in args
+        lownam = Symbol(lowercase(string(nam)))
+        Base.eval(__module__, :( const $nam = stock($(QuoteNode(nam))) ) )
+        Base.eval(__module__, :( const $lownam = $nam() ) )
+    end
 end
 
-# Set up short names for all of the currencies (as Cash instrument types).
-# This is really done as a convenience
-for (s,(ccy,u,c,n)) in Currencies.allpairs()
-    @eval const $s = cash($ccy)
+function Position{S}(amt) where {S<:Stock}
+    T = FixedDecimal{Int,4}
+    Position{S,T}(T(a))
 end
 
 end # module Assets

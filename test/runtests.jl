@@ -1,7 +1,7 @@
 using Assets, Currencies, Instruments, FixedPointDecimals
-
-using Assets: USD, EUR, JPY, JOD, CNY
 using Currencies: currency, symbol, unit, code, name
+
+@cash USD, EUR, JPY, JOD, CNY
 
 using Test
 
@@ -25,7 +25,7 @@ end
 @testset "All currencies" begin
     for sym in Currencies.allsymbols()
         ccy = Currency{sym}()
-        ct = Base.eval(Assets, sym)
+        ct = cash(sym)
         @test ct == cash(typeof(ccy))
         @test ct == cash(sym)
         @test currency(ct) == typeof(ccy)
