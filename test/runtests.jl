@@ -15,7 +15,7 @@ currencies = ((USD, :USD, 2, 840, "US Dollar"),
 
 @testset "Basic currencies" begin
     for (pos, s, u, c, n) in currencies
-        ccy = currency(pos(1))
+        ccy = currency(pos)
         @test symbol(ccy) == s
         @test unit(ccy) == u
         @test name(ccy) == n
@@ -37,8 +37,8 @@ end
 
         pos = Position(ct,1)
         pt = typeof(pos)
-        @test currency(pos) == currency(ct)
-        @test currency(1pt) == ccy
+        @test currency(pt) == currency(ct)
+        @test currency(pt) == ccy
         @test 1pt == pos
         @test pos * 1 == pos
         @test 1pos + 1pos == Position(ct,2)

@@ -21,8 +21,6 @@ When a currency is thought of as a financial instrument (as opposed to a mere la
 
 The @cash macro will set up short constants, matching the ISO 4217 names, so that you can use `USD` instead of `Cash{:USD,2}`.
 
-One can also use the `cash` string macro, i.e. `cash"GBP"`, to refer to a particular Cash type.
-
 For example:
 
 ```julia
@@ -49,8 +47,9 @@ Although `Cash` is a singleton type, other financial instruments may contain var
 A `Position` represents an amount of ownership of a financial instrument. For example, Microsoft stock
 
 ```julia
-const MSFT = stock(:MSFT,USD)
+julia> @stock MSFT
 ```
+
 is a financial instrument. A position could be 1,000 shares of `MSFT` and can be represented in one of two ways:
 
 ```julia
@@ -64,11 +63,6 @@ or
 julia> 1000MSFT
 1000MSFT
 ```
-
-The `stock` string macro can also be used, for example:
-`stock"MSFT"`
-or
-`stock"GSK"gbp` (to indicate a stock, GlaxoSmithKline, denominated in British Pounds).
 
 Similarly, cash positions can be constructed as
 

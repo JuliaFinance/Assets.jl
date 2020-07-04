@@ -17,10 +17,8 @@ Licensed under MIT License, see LICENSE.md
 module Assets
 
 using Currencies, FixedPointDecimals, Instruments
-import Currencies: unit, code, name
-import Instruments: Position
 
-export Position, Currency, Cash, cash, @cash
+export Position, Currency, Cash, cash, @cash, unit, code, name
 export Stock, stock, @stock
 
 "`Cash` is an implementation of `Instrument` represented by a singleton type, with its currency symbol and the number of digits in the minor units, typically 0, 2, or 3, as parameters."
@@ -31,7 +29,7 @@ struct Cash{S, N} <: Instrument{S,Currency{S}}
     end
 end
 
-function Position(::Type{I},amt) where {S,N,I<:Cash{S,N}}
+function Instruments.Position(::Type{I},amt) where {S,N,I<:Cash{S,N}}
     T = FixedDecimal{Int,N}
     Position{I,T}(T(amt))
 end
@@ -50,16 +48,16 @@ macro cash(syms)
     end
 end
 
-unit(::Type{Cash{S,N}}) where {S,N} = N
+Currencies.unit(::Type{Cash{S,N}}) where {S,N} = N
 
-code(::Type{C}) where {S,C<:Cash{S}} = code(S)
+Currencies.code(::Type{C}) where {S,C<:Cash{S}} = code(S)
 
-name(::Type{C}) where {S,C<:Cash{S}} = name(S)
+Currencies.name(::Type{C}) where {S,C<:Cash{S}} = name(S)
 
 """`Stock` is an implementation of a simple `Instrument` represented by a singleton type with a stock symbol and currency, e.g. `Stock{:MSFT,ccy"USD"}`. The currency can be omitted and it will default to USD, e.g. `Stock(:MSFT)`."""
 struct Stock{S,C} <: Instrument{S,C} end
 
-function Position(::Type{I},amt) where {I<:Stock}
+function Instruments.Position(::Type{I},amt) where {I<:Stock}
     Position{I,Int}(amt)
 end
 
