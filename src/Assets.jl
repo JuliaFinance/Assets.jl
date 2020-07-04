@@ -17,16 +17,13 @@ Licensed under MIT License, see LICENSE.md
 module Assets
 
 using Currencies, FixedPointDecimals, Instruments
-import Currencies: symbol, currency, unit, code, name
+import Currencies: unit, code, name
+import Instruments: Position
 
-export Cash, cash, @cash_str, @cash
-export Stock, stock, @stock_str, @stock
+export Position, Currency, Cash, cash, @cash
+export Stock, stock, @stock
 
-"""
-`Cash` is an implementation of `Instrument` represented by a singleton type,
-with its currency symbol and the number of digits in the minor units,
-typically 0, 2, or 3, as parameters.
-"""
+"`Cash` is an implementation of `Instrument` represented by a singleton type, with its currency symbol and the number of digits in the minor units, typically 0, 2, or 3, as parameters."
 struct Cash{S, N} <: Instrument{S,Currency{S}}
     function Cash{S,N}() where {S,N}
         unit(S) === N || error("Currency minor unit does not match.")
@@ -34,66 +31,52 @@ struct Cash{S, N} <: Instrument{S,Currency{S}}
     end
 end
 
-# Functions to return the types, not instances, with the constructors
-cash(S::Symbol) = Cash{S,unit(S)}
-cash(::Type{Currency{S}}) where {S} = cash(S)
-
-# Handle using the type instead of an instance for Cash
-symbol(::Type{<:Cash{S}}) where {S} = S
-unit(::Type{Cash{S,N}}) where {S,N} = N
-code(::Type{<:Cash{S}}) where {S} = code(S)
-name(::Type{<:Cash{S}}) where {S} = name(S)
-currency(::Type{<:Cash{S}}) where {S} = currency(S)
-
-macro cash_str(str)
-    :( cash(Symbol($(esc(uppercase(str))))) )
+function Position(::Type{I},amt) where {S,N,I<:Cash{S,N}}
+    T = FixedDecimal{Int,N}
+    Position{I,T}(T(amt))
 end
+
+"Return a cash instrument type."
+function cash end
+
+cash(S::Symbol) = Cash{S,unit(S)}
+
+cash(::Type{Currency{S}}) where {S} = cash(S)
 
 macro cash(syms)
     args = syms isa Expr ? syms.args : [syms]
     for nam in args
-        lownam = Symbol(lowercase(string(nam)))
-        Base.eval(__module__, :( const $nam = cash($(QuoteNode(nam))) ) )
-        Base.eval(__module__, :( const $lownam = $nam() ) )
+        @eval __module__ const $nam = Assets.$nam
     end
 end
 
-function Position{S}(amt) where {C,N,S<:Cash{C,N}}
-    T = FixedDecimal{Int,N}
-    Position{S,T}(T(amt))
+unit(::Type{Cash{S,N}}) where {S,N} = N
+
+code(::Type{C}) where {S,C<:Cash{S}} = code(S)
+
+name(::Type{C}) where {S,C<:Cash{S}} = name(S)
+
+"""`Stock` is an implementation of a simple `Instrument` represented by a singleton type with a stock symbol and currency, e.g. `Stock{:MSFT,ccy"USD"}`. The currency can be omitted and it will default to USD, e.g. `Stock(:MSFT)`."""
+struct Stock{S,C} <: Instrument{S,C} end
+
+function Position(::Type{I},amt) where {I<:Stock}
+    Position{I,Int}(amt)
 end
 
-"""
-`Stock` is an implementation of a simple `Instrument` represented by a singleton type
-with a stock symbol and currency, e.g. `Stock{:MSFT,ccy"USD"}`.
-The currency can be omitted and it will default to USD, e.g. `Stock(:MSFT)`.
-"""
-struct Stock{S,C} <: Instrument{S,Currency}
-    Stock(sym::Symbol, ccy::Type{<:Currency}=Currency(:USD)) = new{sym,currency(ccy)}()
-    Stock(sym::Symbol, pos::Type{<:Cash}) = new{sym,currency(pos)}()
-end
-stock(sym::Symbol, ccy::Type{<:Currency}=Currency(:USD)) = typeof(Stock(sym, currency(ccy)))
-stock(sym::Symbol, pos::Type{<:Cash}) = typeof(Stock(sym, currency(pos)))
+Stock(S::Symbol, C::Type{<:Currency}=Currency{:USD}) = Stock{S,C}()
 
-symbol(::Type{Stock{S,C}}) where {S,C} = S
-currency(::Type{Stock{S,C}}) where {S,C} = C
-
-macro stock_str(str, ccy="USD")
-    :( stock(Symbol($(esc(str))), $(esc(currency(Symbol(uppercase(ccy))))) ) )
-end
+stock(S::Symbol, C::Type{<:Currency}=Currency{:USD}) = Stock{S,C}
 
 macro stock(syms)
     args = syms isa Expr ? syms.args : [syms]
     for nam in args
-        lownam = Symbol(lowercase(string(nam)))
-        Base.eval(__module__, :( const $nam = stock($(QuoteNode(nam))) ) )
-        Base.eval(__module__, :( const $lownam = $nam() ) )
+        @eval __module__ const $nam = typeof(Position(Stock{$(QuoteNode(nam)),Currency{:USD}},0))
     end
 end
 
-function Position{S}(amt) where {S<:Stock}
-    T = FixedDecimal{Int,4}
-    Position{S,T}(T(a))
+# Contruct cash position types for convenience.
+for (s,(ccy,u,c,n)) in Currencies.allpairs()
+    @eval const $s = typeof(Position($(cash(ccy)),0))
 end
 
 end # module Assets

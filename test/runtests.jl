@@ -1,5 +1,5 @@
 using Assets, Currencies, Instruments, FixedPointDecimals
-using Currencies: currency, symbol, unit, code, name
+# using Currencies: currency, symbol, unit, code, name
 
 @cash USD, EUR, JPY, JOD, CNY
 
@@ -14,7 +14,8 @@ currencies = ((USD, :USD, 2, 840, "US Dollar"),
               (CNY, :CNY, 2, 156, "Yuan Renminbi"))
 
 @testset "Basic currencies" begin
-    for (ccy, s, u, c, n) in currencies
+    for (pos, s, u, c, n) in currencies
+        ccy = currency(pos(1))
         @test symbol(ccy) == s
         @test unit(ccy) == u
         @test name(ccy) == n
@@ -24,24 +25,25 @@ end
     
 @testset "All currencies" begin
     for sym in Currencies.allsymbols()
-        ccy = Currency{sym}()
+        ccy = Currency{sym}
         ct = cash(sym)
-        @test ct == cash(typeof(ccy))
+        @test ct == cash(ccy)
         @test ct == cash(sym)
-        @test currency(ct) == typeof(ccy)
+        @test currency(ct) == ccy
         @test symbol(ct) == symbol(ccy)
         @test unit(ct) == unit(ccy)
         @test code(ct) == code(ccy)
         @test name(ct) == name(ccy)
 
-        position = Position{ct}(1)
-        @test currency(position) == currency(ct)
-        @test currency(1ct) == typeof(ccy)
-        @test 1ct == position
-        @test ct * 1 == position
-        @test 1ct + 1ct == Position{ct}(2)
-        @test 1ct - 1ct == Position{ct}(0)
-        @test 20ct / 4ct == FixedDecimal{Int,unit(ct)}(5)
-        @test 20ct / 4 == Position{ct}(5)
+        pos = Position(ct,1)
+        pt = typeof(pos)
+        @test currency(pos) == currency(ct)
+        @test currency(1pt) == ccy
+        @test 1pt == pos
+        @test pos * 1 == pos
+        @test 1pos + 1pos == Position(ct,2)
+        @test 1pos - 1pos == Position(ct,0)
+        @test 20pos / 4pos == FixedDecimal{Int,unit(ct)}(5)
+        @test 20pos / 4 == Position(ct,5)
     end
 end
