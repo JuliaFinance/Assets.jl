@@ -68,7 +68,7 @@ stock(S::Symbol, C::Type{<:Currency}=Currency{:USD}) = Stock{S,C}
 macro stock(syms)
     args = syms isa Expr ? syms.args : [syms]
     for nam in args
-        @eval __module__ const $nam = typeof(Position(Stock{$(QuoteNode(nam)),Currency{:USD}},0))
+        @eval __module__ const $nam = typeof(Position(Assets.Stock{$(QuoteNode(nam)),Assets.Currency{:USD}},0))
     end
 end
 
